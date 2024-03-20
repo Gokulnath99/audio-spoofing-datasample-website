@@ -11,7 +11,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <nav className=" bg-[#00274C] h-22">
+          <h1 className="text-3xl text-[#FFCB05] font-bold p-7">ISSF Lab</h1>
+        </nav>
+        {children}
+        
+      </body>
     </html>
   );
 }
