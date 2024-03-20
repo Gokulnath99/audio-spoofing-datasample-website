@@ -1,14 +1,12 @@
 "use client";
 
-// Next.js page component to display audio files from Firebase Storage
-
 import { useEffect, useState } from "react";
 import { storage } from "@/firebase";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 
 export default function Home() {
   const [audioGroups, setAudioGroups] = useState([]);
-  const [datasetUrl, setDatasetUrl] = useState('');
+  const [datasetUrl, setDatasetUrl] = useState("");
 
   useEffect(() => {
     const audioAttacks = [
@@ -25,17 +23,19 @@ export default function Home() {
 
   async function fetchDatasetUrl() {
     try {
-      const datasetRef = ref(storage, '/Dataset/Asvspoof19 Laundered Dataset.zip');
+      const datasetRef = ref(
+        storage,
+        "/Dataset/Asvspoof19 Laundered Dataset.zip"
+      );
       const url = await getDownloadURL(datasetRef);
       setDatasetUrl(url);
     } catch (error) {
-      console.error('Failed to load dataset URL:', error);
+      console.error("Failed to load dataset URL:", error);
     }
   }
 
   async function loadAudioGroups(attacks) {
     try {
-
       const groups = await Promise.all(
         attacks.map(async (attack) => {
           const groupRef1 = ref(storage, attack.path);
@@ -61,17 +61,23 @@ export default function Home() {
         })
       );
       setAudioGroups(groups);
-    }catch (error) {
-      console.error('Failed to load audio groups:', error);
+    } catch (error) {
+      console.error("Failed to load audio groups:", error);
     }
-    }
-    
-    return (
-      <div className="mx-auto w-full max-w-screen-xl px-2.5 md:px-20 mt-20 mb-96">
-      <h1 className="text-center text-5xl m-16">Asvspoof19 Laundered Dataset</h1>
+  }
+
+  return (
+    <div className="mx-auto w-full max-w-screen-xl px-2.5 md:px-20 mt-20 mb-96">
+      <h1 className="text-center text-5xl m-16">
+        Asvspoof19 Laundered Dataset
+      </h1>
       <p className="text-center">
         Download the dataset{" "}
-        <a href={datasetUrl} className="text-blue-900 cursor-pointer underline" download={""}>
+        <a
+          href={datasetUrl}
+          className="text-blue-900 cursor-pointer underline"
+          download={""}
+        >
           here
         </a>
       </p>
@@ -99,5 +105,5 @@ export default function Home() {
         </div>
       ))}
     </div>
-  );  
+  );
 }
